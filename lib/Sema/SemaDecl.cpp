@@ -8296,7 +8296,8 @@ void Sema::CheckMain(FunctionDecl* FD, const DeclSpec& DS) {
     FD->setConstexpr(false);
   }
 
-  if (getLangOpts().OpenCL) {
+  const bool isGLSL = Context.getTargetInfo().getTriple().getOS() == llvm::Triple::GLSL;
+  if (getLangOpts().OpenCL && !isGLSL) {
     Diag(FD->getLocation(), diag::err_opencl_no_main)
         << FD->hasAttr<OpenCLKernelAttr>();
     FD->setInvalidDecl();
@@ -8323,20 +8324,34 @@ void Sema::CheckMain(FunctionDecl* FD, const DeclSpec& DS) {
             << FixItHint::CreateReplacement(RTRange, "int");
     }
   } else {
-    // In C and C++, main magically returns 0 if you fall off the end;
-    // set the flag which tells us that.
-    // This is C++ [basic.start.main]p5 and C99 5.1.2.2.3.
+    if(isGLSL){
+      // In GLSL, main should return void.
+      if (!Context.hasSameType(FT->getReturnType(), Context.VoidTy))
+      {
+        // Otherwise, this is just a flat-out error.
+        SourceRange RTRange = FD->getReturnTypeSourceRange();
+        Diag(FD->getTypeSpecStartLoc(), diag::err_main_returns_nonvoid)
+        << (RTRange.isValid() ? FixItHint::CreateReplacement(RTRange, "void")
+        : FixItHint());
+        FD->setInvalidDecl();
+        return;
+      }
+    }else{
+      // In C and C++, main magically returns 0 if you fall off the end;
+      // set the flag which tells us that.
+      // This is C++ [basic.start.main]p5 and C99 5.1.2.2.3.
 
-    // All the standards say that main() should return 'int'.
-    if (Context.hasSameType(FT->getReturnType(), Context.IntTy))
-      FD->setHasImplicitReturnZero(true);
-    else {
-      // Otherwise, this is just a flat-out error.
-      SourceRange RTRange = FD->getReturnTypeSourceRange();
-      Diag(FD->getTypeSpecStartLoc(), diag::err_main_returns_nonint)
-          << (RTRange.isValid() ? FixItHint::CreateReplacement(RTRange, "int")
-                                : FixItHint());
-      FD->setInvalidDecl(true);
+      // All the standards say that main() should return 'int'.
+      if (Context.hasSameType(FT->getReturnType(), Context.IntTy))
+        FD->setHasImplicitReturnZero(true);
+      else {
+        // Otherwise, this is just a flat-out error.
+        SourceRange RTRange = FD->getReturnTypeSourceRange();
+        Diag(FD->getTypeSpecStartLoc(), diag::err_main_returns_nonint)
+        << (RTRange.isValid() ? FixItHint::CreateReplacement(RTRange, "int")
+        : FixItHint());
+        FD->setInvalidDecl(true);
+      }
     }
   }
 
