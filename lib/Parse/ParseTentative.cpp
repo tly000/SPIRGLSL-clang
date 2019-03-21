@@ -1005,6 +1005,10 @@ Parser::isExpressionOrTypeSpecifierSimple(tok::TokenKind Kind) {
   case tok::kw___constant:
   case tok::kw___private:
   case tok::kw___generic:
+  case tok::kw___in:
+  case tok::kw___out:
+  case tok::kw___uniform:
+  case tok::kw___buffer:
   case tok::kw___unknown_anytype:
     return TPResult::False;
 
@@ -1281,7 +1285,10 @@ Parser::isCXXDeclarationSpecifier(Parser::TPResult BracedCastResult,
   case tok::kw___generic:
   case tok::kw___private:
   case tok::kw___constant:
-
+  case tok::kw___in:
+  case tok::kw___out:
+  case tok::kw___uniform:
+  case tok::kw___buffer:
     // GNU
   case tok::kw_restrict:
   case tok::kw__Complex:

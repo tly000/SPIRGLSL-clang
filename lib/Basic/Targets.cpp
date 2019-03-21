@@ -1384,6 +1384,7 @@ namespace {
     4,    // openclcpp_constant
     0,    // openclcpp_generic
     0,    // openclcpp_private
+    0,0,0,0 //opengl_*
   };
   class NVPTXTargetInfo : public TargetInfo {
     static const char * const GCCRegNames[];
@@ -1542,6 +1543,7 @@ static const unsigned R600AddrSpaceMap[] = {
   2,    // openclcpp_constant
   4,    // openclcpp_generic
   0,    // openclcpp_private
+  0,0,0,0 // opengl_*
 };
 
 // If you edit the description strings, make sure you update
@@ -5555,6 +5557,7 @@ namespace {
       5, // openclcpp_constant
       0, // openclcpp_generic
       0, // openclcpp_private
+      0,0,0,0 // opengl_*
   };
 
   class TCETargetInfo : public TargetInfo{
@@ -6323,6 +6326,7 @@ namespace {
     2,    // openclcpp_constant
     4,    // openclcpp_generic
     0,    // openclcpp_private
+    5,6,7,8 // opengl_*
   };
   class SPIRTargetInfo : public TargetInfo {
   public:
@@ -6835,8 +6839,7 @@ static TargetInfo *AllocateTarget(const llvm::Triple &Triple) {
     }
 
     case llvm::Triple::spir: {
-      if (Triple.getOS() != llvm::Triple::UnknownOS ||
-          Triple.getEnvironment() != llvm::Triple::UnknownEnvironment)
+      if (Triple.getEnvironment() != llvm::Triple::UnknownEnvironment)
         return nullptr;
       return new SPIR32TargetInfo(Triple);
     }

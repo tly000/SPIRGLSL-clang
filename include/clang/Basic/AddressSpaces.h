@@ -42,6 +42,11 @@ enum ID {
   openclcpp_generic,
   openclcpp_private,
 
+  opengl_input,
+  opengl_output,
+  opengl_uniform,
+  opengl_buffer,
+
   Last,
   Count = Last-Offset
 };

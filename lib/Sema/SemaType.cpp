@@ -4145,6 +4145,18 @@ static void HandleAddressSpaceTypeAttribute(QualType &Type,
     case AttributeList::AT_OpenCLGenericAddressSpace:
       ASIdx = isOpenCLCPP? LangAS::openclcpp_generic: LangAS::opencl_generic;
       break;
+    case AttributeList::AT_OpenGLInputAddressSpace:
+      ASIdx = LangAS::opengl_input;
+          break;
+    case AttributeList::AT_OpenGLOutputAddressSpace:
+      ASIdx = LangAS::opengl_output;
+          break;
+    case AttributeList::AT_OpenGLUniformAddressSpace:
+      ASIdx = LangAS::opengl_uniform;
+          break;
+    case AttributeList::AT_OpenGLBufferAddressSpace:
+      ASIdx = LangAS::opengl_buffer;
+          break;
     default:
       assert(Attr.getKind() == AttributeList::AT_OpenCLPrivateAddressSpace);
       ASIdx = isOpenCLCPP? LangAS::openclcpp_private: 0;
@@ -5061,7 +5073,11 @@ static void processTypeAttrs(TypeProcessingState &state, QualType &type,
     case AttributeList::AT_OpenCLLocalAddressSpace:
     case AttributeList::AT_OpenCLConstantAddressSpace:
     case AttributeList::AT_OpenCLGenericAddressSpace:
-      case AttributeList::AT_AddressSpace:
+    case AttributeList::AT_OpenGLInputAddressSpace:
+    case AttributeList::AT_OpenGLOutputAddressSpace:
+    case AttributeList::AT_OpenGLUniformAddressSpace:
+    case AttributeList::AT_OpenGLBufferAddressSpace:
+    case AttributeList::AT_AddressSpace:
         HandleAddressSpaceTypeAttribute(type, attr, state.getSema());
         attr.setUsedAsTypeAttr();
         hasOpenCLAddressSpace = true;

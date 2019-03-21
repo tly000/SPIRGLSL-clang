@@ -3351,6 +3351,10 @@ void Parser::ParseDeclarationSpecifiers(DeclSpec &DS,
     case tok::kw___read_only:
     case tok::kw___write_only:
     case tok::kw___read_write:
+    case tok::kw___in:
+    case tok::kw___out:
+    case tok::kw___uniform:
+    case tok::kw___buffer:
       ParseOpenCLQualifiers(DS.getAttributes());
       break;
 
@@ -4099,6 +4103,10 @@ bool Parser::isTypeQualifier() const {
   case tok::kw___global:
   case tok::kw___constant:
   case tok::kw___generic:
+  case tok::kw___in:
+  case tok::kw___out:
+  case tok::kw___uniform:
+  case tok::kw___buffer:
   case tok::kw___read_only:
   case tok::kw___read_write:
   case tok::kw___write_only:
@@ -4265,6 +4273,10 @@ bool Parser::isTypeSpecifierQualifier() {
   case tok::kw___global:
   case tok::kw___constant:
   case tok::kw___generic:
+  case tok::kw___in:
+  case tok::kw___out:
+  case tok::kw___uniform:
+  case tok::kw___buffer:
   case tok::kw___read_only:
   case tok::kw___read_write:
   case tok::kw___write_only:
@@ -4389,6 +4401,10 @@ bool Parser::isDeclarationSpecifier(bool DisambiguatingWithExpression) {
   case tok::kw___global:
   case tok::kw___constant:
   case tok::kw___generic:
+  case tok::kw___in:
+  case tok::kw___out:
+  case tok::kw___uniform:
+  case tok::kw___buffer:
   case tok::kw___read_only:
   case tok::kw___read_write:
   case tok::kw___write_only:
@@ -4644,6 +4660,10 @@ void Parser::ParseTypeQualifierListOpt(DeclSpec &DS, unsigned AttrReqs,
     case tok::kw___local:
     case tok::kw___constant:
     case tok::kw___generic:
+    case tok::kw___in:
+    case tok::kw___out:
+    case tok::kw___uniform:
+    case tok::kw___buffer:
     case tok::kw___read_only:
     case tok::kw___write_only:
     case tok::kw___read_write:
@@ -5434,6 +5454,10 @@ void Parser::ParseFunctionDeclarator(Declarator &D,
             case AttributeList::AT_OpenCLGlobalAddressSpace:
             case AttributeList::AT_OpenCLPrivateAddressSpace:
             case AttributeList::AT_OpenCLGenericAddressSpace:
+            case AttributeList::AT_OpenGLInputAddressSpace:
+            case AttributeList::AT_OpenGLOutputAddressSpace:
+            case AttributeList::AT_OpenGLUniformAddressSpace:
+            case AttributeList::AT_OpenGLBufferAddressSpace:
               FnAttrs.add(list);
               break;
             default:

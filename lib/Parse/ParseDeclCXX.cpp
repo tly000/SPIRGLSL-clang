@@ -1115,6 +1115,10 @@ bool Parser::isValidAfterTypeSpecifier(bool CouldBeBitfield) {
   case tok::kw___constant:      // struct foo {...} __constant x;
   case tok::kw___private:       // struct foo {...} __private x;
   case tok::kw___generic:       // struct foo {...} __generic x;
+  case tok::kw___in:            // struct foo {...} __in x;
+  case tok::kw___out:           // struct foo {...} __out x;
+  case tok::kw___uniform:       // struct foo {...} __uniform x;
+  case tok::kw___buffer:        // struct foo {...} __buffer x;
   case tok::kw_constexpr:       // struct foo {...} constexpr x;
     // As shown above, type qualifiers and storage class specifiers absolutely
     // can occur after class specifiers according to the grammar.  However,

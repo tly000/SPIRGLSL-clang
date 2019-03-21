@@ -667,6 +667,26 @@ def OpenCLGenericAddressSpace : TypeAttr {
   let Documentation = [OpenCLAddressSpaceGenericDocs];
 }
 
+def OpenGLInputAddressSpace : TypeAttr {
+  let Spellings = [Keyword<"__in">];
+  let Documentation = [Undocumented];
+}
+
+def OpenGLOutputAddressSpace : TypeAttr {
+  let Spellings = [Keyword<"__out">];
+  let Documentation = [Undocumented];
+}
+
+def OpenGLBufferAddressSpace : TypeAttr {
+  let Spellings = [Keyword<"__buffer">];
+  let Documentation = [Undocumented];
+}
+
+def OpenGLUniformAddressSpace : TypeAttr {
+  let Spellings = [Keyword<"__uniform">];
+  let Documentation = [Undocumented];
+}
+
 def OpenCLNoSVM : Attr {
   let Spellings = [GNU<"nosvm">];
   let Documentation = [Undocumented];

@@ -708,6 +708,7 @@ static const LangAS::Map *getAddressSpaceMap(const TargetInfo &T,
       10, // openclcpp_constant
       11, // openclcpp_generic
       12, // openclcpp_private
+      13,14,15,16, //opengl_*
     };
     return &FakeAddrSpaceMap;
   } else {
