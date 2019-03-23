@@ -6264,6 +6264,15 @@ void Sema::CheckVariableDeclarationType(VarDecl *NewVD) {
     }
   }
 
+  //GLSL: opengl address space qualifier are only valid in program scope.
+  if(isGLSL && !NewVD->isFileVarDecl()){
+      if(T.getAddressSpace() != 0){
+        Diag(NewVD->getLocation(), diag::err_opengl_addrspace_on_local_variable);
+          NewVD->setInvalidDecl();
+          return;
+      }
+  }
+
   if (NewVD->hasLocalStorage() && T.isObjCGCWeak()
       && !NewVD->hasAttr<BlocksAttr>()) {
     if (getLangOpts().getGC() != LangOptions::NonGC)

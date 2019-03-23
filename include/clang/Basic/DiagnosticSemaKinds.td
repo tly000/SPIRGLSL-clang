@@ -7278,6 +7278,8 @@ def err_opencl_unroll_hint_factor : Error<
   "opencl_unroll_hint requires a positive integral compile time constant expression">;
 def err_static_variables : Error<
   "static storage class can be specified only for global and constant variables">;
+def err_opengl_addrspace_on_local_variable : Error<
+  "The 'uniform', 'in', 'out' and 'buffer' attributes are only allowed on global variables.">;
 def err_enqueue_kernel_num_args_mismatch : Error<
   "number of local_size argument doesn't match the block's prototype">;
 def err_variadic_enqueue_kernel : Error<
