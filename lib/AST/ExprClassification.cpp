@@ -605,7 +605,10 @@ static Cl::ModifiableType IsModifiable(ASTContext &Ctx, const Expr *E,
   if (CT.isConstQualified())
     return Cl::CM_ConstQualified;
   if (CT.getQualifiers().getAddressSpace() == LangAS::opencl_constant ||
-      CT.getQualifiers().getAddressSpace() == LangAS::openclcpp_constant)
+      CT.getQualifiers().getAddressSpace() == LangAS::openclcpp_constant ||
+      CT.getQualifiers().getAddressSpace() == LangAS::opengl_uniform ||
+      CT.getQualifiers().getAddressSpace() == LangAS::opengl_input
+  )
     return Cl::CM_ConstQualified;
 
   // Arrays are not modifiable, only their elements are.

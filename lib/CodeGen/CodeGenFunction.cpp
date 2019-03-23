@@ -570,7 +570,10 @@ static void GenOpenCLArgMetadata(const FunctionDecl *FD, llvm::Function *Fn,
         typeQuals = "restrict";
       if (pointeeTy.isConstQualified() ||
           pointeeTy.getAddressSpace() == LangAS::opencl_constant ||
-          pointeeTy.getAddressSpace() == LangAS::openclcpp_constant)
+          pointeeTy.getAddressSpace() == LangAS::openclcpp_constant ||
+          pointeeTy.getAddressSpace() == LangAS::opengl_input ||
+          pointeeTy.getAddressSpace() == LangAS::opengl_uniform
+      )
         typeQuals += typeQuals.empty() ? "const" : " const";
       if (pointeeTy.isVolatileQualified())
         typeQuals += typeQuals.empty() ? "volatile" : " volatile";

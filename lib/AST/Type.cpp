@@ -71,7 +71,9 @@ bool QualType::isConstant(QualType T, ASTContext &Ctx) {
     return AT->getElementType().isConstant(Ctx);
 
   return T.getAddressSpace() == LangAS::opencl_constant || 
-         T.getAddressSpace() == LangAS::openclcpp_constant;
+         T.getAddressSpace() == LangAS::openclcpp_constant ||
+         T.getAddressSpace() == LangAS::opengl_input ||
+         T.getAddressSpace() == LangAS::opengl_uniform;
 }
 
 unsigned ConstantArrayType::getNumAddressingBits(ASTContext &Context,

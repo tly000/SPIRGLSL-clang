@@ -1784,6 +1784,18 @@ void CXXNameMangler::mangleQualifiers(Qualifiers Quals) {
       case LangAS::openclcpp_constant:
         ASString = "CLconstant";
         break;
+      case LangAS::opengl_uniform:
+        ASString = "GLconstant";
+        break;
+      case LangAS::opengl_input:
+        ASString = "GLinput";
+        break;
+      case LangAS::opengl_buffer:
+        ASString = "GLbuffer";
+            break;
+      case LangAS::opengl_output:
+        ASString = "GLoutput";
+            break;
       //  <CUDA-addrspace> ::= "CU" [ "device" | "constant" | "shared" ]
       case LangAS::cuda_device:     ASString = "CUdevice";   break;
       case LangAS::cuda_constant:   ASString = "CUconstant"; break;

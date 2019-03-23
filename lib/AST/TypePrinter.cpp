@@ -1514,6 +1514,18 @@ void Qualifiers::print(raw_ostream &OS, const PrintingPolicy& Policy,
       case LangAS::openclcpp_private:
         OS << "__private";
         break;
+      case LangAS::opengl_input:
+        OS << "__input";
+            break;
+      case LangAS::opengl_output:
+        OS << "__output";
+            break;
+      case LangAS::opengl_uniform:
+        OS << "__uniform";
+            break;
+      case LangAS::opengl_buffer:
+        OS << "__buffer";
+            break;
       default:
         OS << "__attribute__((address_space(";
         OS << addrspace;
