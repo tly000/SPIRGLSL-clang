@@ -11,6 +11,7 @@
 //
 //===----------------------------------------------------------------------===//
 
+#include <iostream>
 #include "TypeLocBuilder.h"
 #include "clang/AST/ASTConsumer.h"
 #include "clang/AST/ASTContext.h"
@@ -5145,7 +5146,8 @@ static void processTypeAttrs(TypeProcessingState &state, QualType &type,
   // (...)
   // Pointers that are declared without pointing to a named address space point
   // to the generic address space.
-  if (OpenCLVersion >= 200 && !hasOpenCLAddressSpace &&
+  const bool isGLSL = state.getSema().Context.getTargetInfo().getTriple().getOS() == llvm::Triple::GLSL;
+  if (!isGLSL && OpenCLVersion >= 200 && !hasOpenCLAddressSpace &&
     type.getAddressSpace() == 0 &&
     !type->isFunctionType()) {
     bool isOpenCLCPP = state.getSema().Context.getLangOpts().OpenCLCPlusPlus;

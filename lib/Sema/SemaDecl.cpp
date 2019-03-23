@@ -6218,9 +6218,10 @@ void Sema::CheckVariableDeclarationType(VarDecl *NewVD) {
     return;
   }
 
+  const bool isGLSL = Context.getTargetInfo().getTriple().getOS() == llvm::Triple::GLSL;
   // OpenCL v1.2 s6.5 - All program scope variables must be declared in the
   // __constant address space.
-  if (getLangOpts().OpenCL && NewVD->isFileVarDecl()) {
+  if (!isGLSL && getLangOpts().OpenCL && NewVD->isFileVarDecl()) {
     if (getLangOpts().OpenCLVersion < 200) {
       if (T.getAddressSpace() != LangAS::opencl_constant &&
           !T->isSamplerT()) {
