@@ -433,6 +433,14 @@ static void InitializeStandardPredefinedMacros(const TargetInfo &TI,
     if (LangOpts.FastRelaxedMath)
       Builder.defineMacro("__FAST_RELAXED_MATH__");
   }
+
+  const bool isGLSL = TI.getTriple().getOS() == llvm::Triple::GLSL;
+  if(isGLSL) {
+    Builder.defineMacro("__GLSL__", "1");
+    //define shaderspecific macro
+    Builder.defineMacro("__" + TI.getTriple().getEnvironmentName() + "_shader__", "1");
+  }
+
   // Not "standard" per se, but available even with the -undef flag.
   if (LangOpts.AsmPreprocessor)
     Builder.defineMacro("__ASSEMBLER__");
