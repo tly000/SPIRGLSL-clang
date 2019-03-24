@@ -1515,10 +1515,10 @@ void Qualifiers::print(raw_ostream &OS, const PrintingPolicy& Policy,
         OS << "__private";
         break;
       case LangAS::opengl_input:
-        OS << "__input";
+        OS << "__in";
             break;
       case LangAS::opengl_output:
-        OS << "__output";
+        OS << "__out";
             break;
       case LangAS::opengl_uniform:
         OS << "__uniform";
